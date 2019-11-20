@@ -1,0 +1,93 @@
+package stack;
+
+public class MyStackArrayList<E> {
+	
+	public int top,size;
+	public E[] a;
+	
+	
+	public MyStackArrayList()
+	{
+		top = -1;size=0;
+		a = (E[]) new Object[10];
+	}
+	public MyStackArrayList(int capacity)
+	{
+		top = -1;
+		a = (E[]) new Object[capacity];
+	}
+	
+	
+	
+	public E push(E e)
+	{ 
+		if(top >= a.length)
+		{
+			System.out.println("Stack is overflow");
+			return null;
+		}
+		else {
+				top++;
+				a[top]=e;
+		size++;
+		}
+		return e;
+	}
+	
+	
+	@Override
+	public String toString()
+	{
+		String s = " ";
+		for(int i = 0 ; i <= top ; i++)
+		{
+			s += a[i];
+		}
+		return s;
+	}
+	
+	
+	
+	public E peek()
+	{
+		if(top == -1)
+		{
+			System.out.println("Empty");
+			return null;
+		}
+		return a[top];
+	}
+	
+	
+	
+	public E pop()
+	{
+		if(top == -1)
+		{
+			System.out.println("Empty");
+			return null;
+		}
+		return a[top--];
+	}
+	
+	
+	
+	public int search(E e)
+	{
+		for(int i = top ; i >= 0 ; i--) {
+			if(a[i] == e) return size - i;}
+		return -1;
+	}
+
+	public static void main(String[] args) {
+		
+		MyStackArrayList<Integer> h = new MyStackArrayList<Integer>();
+		h.push(20);
+		h.push(5);
+		h.push(15);
+		h.push(6);
+		System.out.println(h.search(15));
+		System.out.println(h.toString());
+	}
+
+}

@@ -1,0 +1,89 @@
+package stack;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Exercise01 {
+	private int n;
+	private String s;
+	
+	public void input() {
+		Scanner kb= new Scanner(System.in);
+		System.out.println("enter n:");
+		n=kb.nextInt();
+	}
+	public void toBinary(int k) {
+		Stack <Integer> s= new Stack<Integer>();
+		while(n>0)
+		{
+			int du = n%k;
+			s.push(du);
+			n=n/k;
+		}
+		while(s.empty()==false) {
+			if(s.peek()<10) {
+			System.out.print(s.pop()+" ");
+			}
+			else {
+				/*if(s.pop()==10)
+					System.out.println("A" + s.pop());
+				else 
+					if(s.pop()==11)
+						System.out.println("B"+s.pop());*/
+				System.out.print((char)(s.pop()+55));
+		}
+			}
+	} 
+	public boolean doixung() {
+		Stack <Integer> s= new Stack<Integer>();
+		Queue <Integer> q= new LinkedList<Integer>();
+		while(n==0) {
+			int du = n%10;
+			s.push(du);
+			q.add(du);
+			n=n/10;
+		}
+		while(s.empty()==false&&q.isEmpty()==false)
+		{
+			if(s.pop()!=q.remove()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public void input2() {
+		Scanner kb = new Scanner(System.in);
+		System.out.println("enter S:");
+		s=kb.nextLine();
+	}
+	public boolean ktradau() {
+		Stack <Character > st= new Stack<Character>();
+		for (int i=0;i<s.length();i++) {
+			if(s.charAt(i)=='(') {
+				st.push(s.charAt(i));
+				}
+				else {
+					if(s==")"&&st.empty())
+						return false;
+					else
+				st.pop();}
+			
+					}
+		if(st.empty())
+			return true;
+	return false;
+			}
+		
+	
+	public static void main(String[] args) {
+		Exercise01 h= new Exercise01();
+		h.input2();
+//		h.toBinary(16);
+//		h.doixung();
+		h.ktradau();
+
+	}
+
+}

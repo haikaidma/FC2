@@ -1,0 +1,59 @@
+
+public class Recustion {
+public static long factorial(int n) {
+	if(n==0)
+		return 1;
+	else return n*factorial(n-1);
+}
+public static void BS(int n)
+{
+	if(n<0)
+		System.out.println("no");
+	else
+		if(n==0)
+			System.out.println("BS");
+		else BS(n-7);
+}
+public static int UCLN(int a, int b ) {
+	if(a==0||b==0)
+		return a+b;
+	if(a>=b)
+		return UCLN(a-b,b);
+	else
+		return UCLN(a,b-a);
+}
+public static long laydu(int a, int b) {
+	if(a==0||b==0)
+		return 0;
+	if(a>=b)
+		return laydu(a-b,b);
+	else 
+		return a;
+}
+public static long laynguyen(int a, int b,int d) {
+	int dem=d;
+	if(a==0||b==0)
+		return 0;
+	if(a>=b)
+		return laynguyen(a-b,b,dem+1);
+	else
+		return dem;
+}
+public static long mu(int n) {
+	if(n==0)
+		return 1;
+	if(n>0)
+		return mu(n-1)+mu(n-1);
+	else 
+		return -1;
+}
+public static void main(String[] args ) {
+
+	Recustion.factorial(5);
+	Recustion.BS(125);
+	System.out.println(Recustion.UCLN(0, 3));
+	System.out.println(Recustion.laydu(4, 2));
+	System.out.println(Recustion.laynguyen(4, 0, 0));
+	System.out.println(Recustion.mu(5));
+}
+}

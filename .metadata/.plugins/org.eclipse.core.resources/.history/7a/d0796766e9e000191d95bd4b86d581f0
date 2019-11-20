@@ -1,0 +1,22 @@
+
+public class Recustion {
+public static long factorial(int n) {
+	if(n==0)
+		return 1;
+	else return n*factorial(n-1);
+}
+public static void BS(int n)
+{
+	if(n<0)
+		System.out.println("no");
+	else
+		if(n==0)
+			System.out.println("BS");
+		else BS(n-7);
+}
+public static void main(String[] args ) {
+
+	Recustion.factorial(5);
+	Recustion.BS(12384);
+}
+}

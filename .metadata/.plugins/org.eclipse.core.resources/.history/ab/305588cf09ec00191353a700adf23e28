@@ -1,0 +1,38 @@
+import java.util.Stack;
+
+public class khudequi {
+public static void doihe(int n,int k) {
+	Stack <Integer> s= new Stack<Integer>();
+		while(n>0) {
+			s.push(n%10);
+			n=n/k;
+		}
+		while(s.isEmpty()==false) {
+		System.out.println(s.peek()<10 ? s.pop():(char)(s.pop()+55));
+		}
+	}
+public static long factorical(int n){
+	Stack<Integer> s= new Stack<Integer>();
+	while(n>0) {
+		s.push(n);
+		n=n-1;
+	}
+	while(s.isEmpty()==false) {
+	return s.peek()==1?1:s.pop()+s.pop();}
+	return s.pop();
+}
+public static void sum(int n) {
+	Stack<Integer> s= new Stack<Integer>();
+	
+	while(n>0) {
+		s.push(n);
+		n=n-1;
+	}
+	while(s.isEmpty()==false) {
+	System.out.println( s.pop());}
+
+}
+	public static void main(String[] args) {
+		khudequi.sum(4);
+	}
+}

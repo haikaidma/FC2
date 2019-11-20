@@ -1,0 +1,454 @@
+package gui;
+
+import event.readQuanLyTamTru;
+import event.writeQuanLyTamTru;
+import console.PersonTamTru;
+
+import javax.swing.filechooser.FileSystemView;
+import java.util.*;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+import com.sun.corba.se.pept.transport.Connection;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+public class QuanLyTamTru extends JFrame implements ActionListener,KeyListener,MouseListener{
+	JButton btnAdd,btnEdit,btnDelete,btnSave,btnOpen,btnClear;
+	private JFileChooser fc = new JFileChooser();
+	JLabel lbMaNhanKhau,lbCmnd,lbQueQuan,lbHoVaTen,lbNgaySinh
+			,lbPhone,lbSoDienThoai,lbGioiTinh,lbTieuDe,lbSearch;
+	JTextField txtMaNhanKhau,txtCmnd,txtQueQuan,txtHoVaTen,txtNgaySinh,txtPhone,txtSoDienThoai,txtGioiTinh,txtSearch;
+	JLabel lbMaTamTru,lbQuanHeChuHo;
+	JTextField txtMaTamTru,txtQuanHeChuHo;
+	
+	JRadioButton nam,nu,opt;
+	
+	ButtonGroup btnGioiTinh,btnGender;
+	JButton btnDecrease,btnIncrease;
+	
+	JTable tableList;
+	JScrollPane scrollPane = new JScrollPane();
+	Vector tableTitle = new Vector();
+	Vector tableRecords = new Vector();
+	PersonTamTru[] list = new PersonTamTru[1000];
+	
+	static int n=0;
+	public QuanLyTamTru() throws IOException
+	{
+		//1. Initialization
+		super("Quản Lý Tạm Trú");
+		setLocation(300, 0);
+		setSize(new Dimension(1000,500));
+		super.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("3.jpg")))));
+		setLayout(null);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		lbTieuDe = new JLabel("Quản Lý Tạm Trú Đà Nẵng");
+		lbTieuDe.setFont(new Font("Arial",3,16));
+		lbTieuDe.setBounds(new Rectangle(50,10,250,50));
+		add(lbTieuDe);
+		
+		lbSearch = new JLabel("Tìm Kiếm");
+		lbSearch.setBounds(new Rectangle(700,80,60,15));
+		add(lbSearch);
+		txtSearch = new JTextField();
+		txtSearch.setBounds(new Rectangle(760,80,140,15));
+		add(txtSearch);
+		
+		//tao bang
+		tableList = new JTable();
+		btnIncrease = new JButton("Tăng");
+		btnIncrease.setBounds(new Rectangle(900,100,80,20));
+		add(btnIncrease);
+		btnDecrease = new JButton("Giảm");
+		btnDecrease.setBounds(new Rectangle(900,120,80,20));
+		add(btnDecrease);
+		scrollPane.setViewportView(tableList);
+		scrollPane.setBounds(new Rectangle(50,100,850,150));
+		tableTitle.add("Mã Nhân Khẩu");
+        tableTitle.add("Họ Và Tên");
+        tableTitle.add("Số CMND");
+        tableTitle.add("Quê Quán");
+        tableTitle.add("Ngày Sinh");
+        tableTitle.add("Giới Tính");
+        tableTitle.add("Số Điện Thoại");
+        tableTitle.add("Mã Tạm Trú");
+        tableTitle.add("Quan Hệ Chủ Hộ");
+        
+        tableList.setModel(new DefaultTableModel(tableRecords, tableTitle));
+		add(scrollPane);
+		
+		
+		lbMaNhanKhau = new JLabel("Mã Nhân Khẩu");
+		lbMaNhanKhau.setBounds(new Rectangle(50,300,85,20));
+		add(lbMaNhanKhau);
+		txtMaNhanKhau = new JTextField();
+		txtMaNhanKhau.setBounds(new Rectangle(135,300,100,20));
+		add(txtMaNhanKhau);
+		
+		
+		//Ma Nhan Khau CMND Que Quan
+		lbCmnd = new JLabel("Số CMND");
+		lbCmnd.setBounds(new Rectangle(255,300,70,20));
+		add(lbCmnd);
+		txtCmnd = new JTextField();
+		txtCmnd.setBounds(new Rectangle(315,300,100,20));
+		add(txtCmnd);
+		lbQueQuan = new JLabel("Quê Quán");
+		lbQueQuan.setBounds(new Rectangle(430,300,70,20));
+		add(lbQueQuan);
+		txtQueQuan = new JTextField();
+		txtQueQuan.setBounds(new Rectangle(500,300,100,20));
+		add(txtQueQuan);
+		
+		lbHoVaTen = new JLabel("Họ và Tên");
+		lbHoVaTen.setBounds(new Rectangle(50,330,85,20));
+		add(lbHoVaTen);
+		txtHoVaTen = new JTextField();
+		txtHoVaTen.setBounds(new Rectangle(135,330,100,20));
+		add(txtHoVaTen);
+		
+		lbNgaySinh = new JLabel("Ngày Sinh");
+		lbNgaySinh.setBounds(new Rectangle(255,330,100,20));
+		add(lbNgaySinh);
+		txtNgaySinh = new JTextField();
+		txtNgaySinh.setBounds(new Rectangle(315,330,100,20));
+		add(txtNgaySinh);
+		
+		lbMaTamTru = new JLabel("Mã Tạm Trú");
+		lbMaTamTru.setBounds(new Rectangle(255,360,120,20));
+		add(lbMaTamTru);
+		txtMaTamTru = new JTextField();
+		txtMaTamTru.setBounds(new Rectangle(335,360,80,20));
+		add(txtMaTamTru);
+		
+		lbGioiTinh = new JLabel("Giới Tính");
+		lbGioiTinh.setBounds(new Rectangle(430,330,70,20));
+		add(lbGioiTinh);
+		nam = new JRadioButton("Nam");
+		nam.setBounds(new Rectangle(500,330,55,20));
+		nu = new JRadioButton("Nữ");
+		nu.setBounds(new Rectangle(555,330,50,20));
+		opt = new JRadioButton("Tùy Chọn");
+		opt.setBounds(new Rectangle(500,350,100,20));
+		add(nam);
+		add(nu);
+		add(opt);
+		btnGioiTinh = new ButtonGroup();
+		btnGioiTinh.add(nam);
+		btnGioiTinh.add(nu);
+		btnGioiTinh.add(opt);
+		
+		lbSoDienThoai = new JLabel("Số điện thoại");
+		lbSoDienThoai.setBounds(new Rectangle(50,360,100,20));
+		add(lbSoDienThoai);
+		txtSoDienThoai = new JTextField();
+		txtSoDienThoai.setBounds(new Rectangle(135,360,100,20));
+		add(txtSoDienThoai);
+		
+		lbQuanHeChuHo = new JLabel("Quan Hệ Chủ Hộ");
+		lbQuanHeChuHo.setBounds(new Rectangle(50,390,110,20));
+		add(lbQuanHeChuHo);
+		txtQuanHeChuHo = new JTextField();
+		txtQuanHeChuHo.setBounds(new Rectangle(145,390,90,20));
+		add(txtQuanHeChuHo);
+		
+		btnAdd = new JButton("Add");
+		btnAdd.setBounds(new Rectangle(630,300,80,50));
+		btnAdd.addActionListener(this);
+		add(btnAdd);
+		btnEdit = new JButton("Edit");
+		btnEdit.setBounds(new Rectangle(725,300,80,50));
+		btnEdit.addActionListener(this);
+		add(btnEdit);
+		btnDelete = new JButton("Delete");
+		btnDelete.setBounds(new Rectangle(820,300,80,50));
+		btnDelete.addActionListener(this);
+		add(btnDelete);
+		btnSave = new JButton("Save");
+		btnSave.setBounds(new Rectangle(630,370,80,50));
+		btnSave.addActionListener(this);
+		add(btnSave);
+		btnOpen = new JButton("Open");
+		btnOpen.setBounds(new Rectangle(725,370,80,50));
+		btnOpen.addActionListener(this);
+		add(btnOpen);
+		btnClear = new JButton("Clear");
+		btnClear.setBounds(new Rectangle(820,370,80,50));
+		btnClear.addActionListener(this);
+		add(btnClear);
+		
+		tableList.addMouseListener(this);
+		
+		setVisible(true);
+		setResizable(false);
+	}
+	public static void main(String[] args) throws IOException {
+		QuanLyTamTru huy = new QuanLyTamTru();
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == btnAdd)
+			if(txtMaNhanKhau.getText().equals("") || txtHoVaTen.getText().equals("") || txtCmnd.getText().equals(""))
+				JOptionPane.showMessageDialog(rootPane, "Hãy nhập đủ dữ liệu sau đó ấn Add");
+			else if (!(txtNgaySinh.getText()).matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
+		    	JOptionPane.showMessageDialog(rootPane, "Sai định dạng ngày");
+		    	txtNgaySinh.setText("");
+		    	txtNgaySinh.requestFocus();
+			}
+		    	else
+		    
+		{
+			Vector record = new Vector();
+			record.add(txtMaNhanKhau.getText());
+			record.add(txtHoVaTen.getText());
+			record.add(txtCmnd.getText());
+			//record.add(cityList.getSelectedItem().toString());
+			record.add(txtQueQuan.getText());
+			record.add(txtNgaySinh.getText());
+			String gt ="";
+			if(nam.isSelected())
+				gt = "Nam";
+			else if(nu.isSelected())
+				gt ="Nữ";
+			record.add(gt);
+			record.add(txtSoDienThoai.getText());
+			record.add(txtMaTamTru.getText());
+			record.add(txtQuanHeChuHo.getText());
+			list[n] = new PersonTamTru
+					(txtMaNhanKhau.getText(),txtHoVaTen.getText(),txtCmnd.getText(),txtQueQuan.getText(),
+							gt,txtSoDienThoai.getText(),txtNgaySinh.getText(),txtMaTamTru.getText(),txtQuanHeChuHo.getText());
+			n++;
+			tableRecords.add(record);
+			tableList.setModel(new DefaultTableModel(tableRecords,tableTitle));
+			JOptionPane.showMessageDialog(rootPane, "Thêm thành công");
+			//đặt các ô về mặc định
+			btnGioiTinh.clearSelection();
+			txtMaNhanKhau.setText("");
+			txtHoVaTen.setText("");
+			txtCmnd.setText("");
+			txtQueQuan.setText("");
+			txtNgaySinh.setText("");
+			txtSoDienThoai.setText("");
+			txtMaTamTru.setText("");
+			txtQuanHeChuHo.setText("");
+			txtMaNhanKhau.requestFocus();
+		}
+		//Xóa 1 dòng
+		if(e.getSource() == btnDelete)
+		{
+			int iDongDaChon = tableList.getSelectedRow();
+            if (iDongDaChon == -1) {
+                JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn record cần xóa");
+            } else {
+                Vector vDongDaChon = (Vector) tableRecords.get(iDongDaChon);
+                String idCuaDongDaChon = vDongDaChon.get(0).toString();
+                if (JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc chắn muốn xóa dòng đã chọn có id: " + idCuaDongDaChon, "Lua chon", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    tableRecords.remove(iDongDaChon);
+                    tableList.setModel(new DefaultTableModel(tableRecords, tableTitle));
+                    for(int i = iDongDaChon ; i < n -1 ; i++)
+                    	list[i] = list[i+1];
+                    n--;
+                }
+                
+            }
+            
+          //đặt các ô về mặc định
+			btnGioiTinh.clearSelection();
+			txtMaNhanKhau.setText("");
+			txtHoVaTen.setText("");
+			txtCmnd.setText("");
+			txtQueQuan.setText("");
+			txtNgaySinh.setText("");
+			txtSoDienThoai.setText("");
+			txtMaNhanKhau.requestFocus();
+		}
+		if (e.getSource() == btnEdit) {
+            int iDongDaChon = tableList.getSelectedRow();
+            if (iDongDaChon == -1) {
+                JOptionPane.showMessageDialog(rootPane, "Xin vui lòng chọn dòng cần sửa");
+            } else {
+            	String gt ="";
+                if(nam.isSelected())
+                	gt ="Nam";
+                else if(nu.isSelected())
+                	gt = "Nữ";
+                Vector record = new Vector();
+                
+                
+                record.add(txtMaNhanKhau.getText());
+                record.add(txtHoVaTen.getText());
+                record.add(txtCmnd.getText());
+                record.add(txtQueQuan.getText());
+                record.add(txtNgaySinh.getText());
+                record.add(gt);
+                record.add(txtSoDienThoai.getText());
+                record.add(txtMaTamTru.getText());
+                record.add(txtQuanHeChuHo.getText());
+                tableRecords.set(iDongDaChon, record);
+                tableList.setModel(new DefaultTableModel(tableRecords, tableTitle));
+                
+                list[iDongDaChon] = new PersonTamTru
+    					(txtMaNhanKhau.getText(),txtHoVaTen.getText(),txtCmnd.getText(),txtQueQuan.getText(),
+    							gt,txtSoDienThoai.getText(),txtNgaySinh.getText(),txtMaTamTru.getText(),txtQuanHeChuHo.getText());
+            JOptionPane.showMessageDialog(rootPane, "Cập nhật xong");
+            
+          //đặt các ô về mặc định
+			btnGioiTinh.clearSelection();
+			txtMaNhanKhau.setText("");
+			txtHoVaTen.setText("");
+			txtCmnd.setText("");
+			txtQueQuan.setText("");
+			txtNgaySinh.setText("");
+			txtSoDienThoai.setText("");
+			txtMaTamTru.setText("");
+			txtQuanHeChuHo.setText("");
+			txtMaNhanKhau.requestFocus();
+			
+            }
+        }
+		if(e.getSource()==btnSave) {
+			JFileChooser c = new JFileChooser();
+			int rVal = c.showSaveDialog(null);
+			if (rVal == JFileChooser.APPROVE_OPTION) {
+			     String filename = c.getSelectedFile().getName();
+			     String dir = c.getCurrentDirectory().toString();
+			     String excelFilePath = dir+"\\"+filename+".xlsx";
+//			     File file = new File(excelFilePath);
+//			     if(file.exists())
+//			    	 file.delete();
+			     writeQuanLyTamTru huy = new writeQuanLyTamTru();
+			     List<PersonTamTru> persons = huy.getPersons(list,n);
+			     
+					try {
+						huy.writeExcel(persons, excelFilePath);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				
+					JOptionPane.showMessageDialog(rootPane, "Lưu Tại : "+excelFilePath);
+			 }
+		}
+		if(e.getSource()==btnOpen) {
+			JFileChooser c = new JFileChooser();
+			int rVal = c.showOpenDialog(null);
+			if (rVal == JFileChooser.APPROVE_OPTION) {
+			     String filename = c.getSelectedFile().getName();
+			     String dir = c.getCurrentDirectory().toString();
+			     String excelFilePath = dir+"\\"+filename+".xlsx";
+			     readQuanLyTamTru huy = new readQuanLyTamTru();
+			     try {
+					 List<PersonTamTru> persons = huy.readExcel(excelFilePath) ;
+					 n = 0;
+					 for(PersonTamTru person : persons)
+				     {
+						 list[n] = new PersonTamTru
+									(person.getMaNhanKhau(),person.getHoVaTen(),person.getCmnd(),person.getQueQuan(),
+											person.getGioiTinh(),person.getSdt(),person.getDay(),person.getMaTamTru(),person.getQuanHeChuHo());
+//						 
+						 Vector record = new Vector();
+				    	 record.add(person.getMaNhanKhau());
+				    	 record.add(person.getHoVaTen());
+				    	 record.add(person.getCmnd());
+				    	 record.add(person.getQueQuan());
+				    	 record.add(person.getDay());
+				    	 record.add(person.getGioiTinh());
+				    	 record.add(person.getSdt());
+				    	 record.add(person.getMaTamTru());
+				    	 record.add(person.getQuanHeChuHo());
+				    	 tableRecords.add(record);
+				    	 tableList.setModel(new DefaultTableModel(tableRecords,tableTitle));
+				    	 
+							n++;
+				     }
+					 
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			    
+			}
+		}	
+		if(e.getSource() == btnClear)
+		{
+			for(int i = 0 ; i < n ; i++)
+			{
+				Vector vDongDaChon = (Vector) tableRecords.get(0);
+	            String idCuaDongDaChon = vDongDaChon.get(0).toString();
+				tableRecords.remove(0);
+                tableList.setModel(new DefaultTableModel(tableRecords, tableTitle));
+			}
+			n = 0;
+			btnGioiTinh.clearSelection();
+			txtMaNhanKhau.setText("");
+			txtHoVaTen.setText("");
+			txtCmnd.setText("");
+			txtQueQuan.setText("");
+			txtNgaySinh.setText("");
+			txtSoDienThoai.setText("");
+			txtMaTamTru.setText("");
+			txtQuanHeChuHo.setText("");
+			txtMaNhanKhau.requestFocus();
+		}
+		
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (e.getSource() == tableList) {
+            int iDongDaChon = tableList.getSelectedRow();
+            if (iDongDaChon != -1) {
+                Vector vDongDaChon = (Vector) tableRecords.get(iDongDaChon);
+                
+                txtMaNhanKhau.setText(vDongDaChon.get(0).toString());
+                txtHoVaTen.setText(vDongDaChon.get(1).toString());
+                txtCmnd.setText(vDongDaChon.get(2).toString());
+                txtQueQuan.setText(vDongDaChon.get(3).toString()); 
+                txtNgaySinh.setText(vDongDaChon.get(4).toString());
+                if(vDongDaChon.get(5).toString().equals("Nam"))
+                	nam.setSelected(true);
+                else if(vDongDaChon.get(5).toString().equals("Nữ"))
+                	nu.setSelected(true);
+                else opt.setSelected(true);
+                txtSoDienThoai.setText(vDongDaChon.get(6).toString());
+                txtMaTamTru.setText(vDongDaChon.get(7).toString());
+                txtQuanHeChuHo.setText(vDongDaChon.get(8).toString());
+            }
+        }
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+
+}

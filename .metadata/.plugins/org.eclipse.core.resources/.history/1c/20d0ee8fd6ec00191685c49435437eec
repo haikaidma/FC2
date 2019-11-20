@@ -1,0 +1,112 @@
+import java.util.Stack;
+
+public class khudequi {
+public static String doihe(int n,int k) {
+	Stack <Integer> s= new Stack<Integer>();
+	String rs = "";
+		while(n>0) {
+			s.push(n%k);
+			n=n/k;
+		}
+		while(s.isEmpty()==false) {
+//			rs+= (s.peek() < 10) ? s.pop() : (char)(s.pop() + 55);
+			if(s.peek() < 10)
+				rs+=s.pop();
+			else rs += (char)(s.pop() + 55);
+		}
+	return rs;
+	}
+public static long factorical(int n){
+	Stack<Integer> s= new Stack<Integer>();
+	int sum=1;
+	while(n>0) {
+		s.push(n);
+		n=n-1;
+	}
+	while(s.isEmpty()==false) {
+		sum=sum*s.pop();
+	}
+	return sum;
+	}
+public static long sum(int n) {
+	Stack<Integer> s= new Stack<Integer>();
+	int sum=0;
+	while(n>0) {
+		s.push(n);
+		n=n-1;
+	}
+	while(s.isEmpty()==false) {
+	 sum=sum+s.pop();
+	 }
+	return sum;
+}
+public static long sum2(int n) {
+	Stack<Integer> s= new Stack<Integer>();
+		n=n%2==0?n=n-1:1;
+		int sum2=0;
+	while(n>0) {
+		s.push(n);
+		n=n-2;
+	}
+	while(s.isEmpty()==false) {
+		sum2=sum2+s.pop();
+	}
+	return sum2;
+}
+	public static int daonguoc(int n) {
+		Stack<Integer> s= new Stack<Integer>();
+		int t=0;
+		while(n>0)
+		{
+			s.push(n%10);
+			n=n/10;
+		}
+		while(s.isEmpty()==false) {
+			t =s.pop()+t*10 ;
+		}
+		return t;
+	}
+	public static long mod(int a, int b) {
+		Stack<Integer> s= new Stack<Integer>();
+		if(a==0||b==0)
+			return 0;
+		while(a>=b) {
+			s.push(a=a-b);
+		}
+		return a;
+	}
+	public static long  div(int a, int b) {
+		Stack<Integer> s= new Stack<Integer>();
+		int dem=0;
+		while(a>=b) {
+			s.push(a=a-b);
+			dem++;
+		}
+		return dem;
+	}
+	
+	public static String reverse(int s)
+	{
+		int n = 0;
+		String as = "";
+		Stack<Integer> huy = new Stack<Integer>();
+		for( ; s != 0  ; s/= 10)
+			huy.push(s%10);
+		while(!huy.isEmpty())
+//			n = n*10 +  huy.pop();
+			as+=huy.pop();
+		return as;
+	}
+	public static long ucln(int a,int b) {
+		Stack<Integer> s= new Stack<Integer>();
+		if(a==0||b==0) 
+			return a+b;
+		while(a>=b) {
+			s.push(a=a-b);
+		}
+		return b=b-a;
+	}
+	public static void main(String[] args) {
+		System.out.println(reverse(123));
+	}
+}

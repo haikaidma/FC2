@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;readQuanLyTamTru&apos; to &apos;event&apos;&#x0D;&#x0A;- Original project: &apos;gui&apos;&#x0D;&#x0A;- Original element: &apos;gui/src/readQuanLyTamTru&apos;&#x0D;&#x0A;- Renamed element: &apos;gui/src/event&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;readQuanLyTamTru&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;readQuanLyTamTru" name="event" qualified="false" references="true" stamp="1558054859454" textual="false" version="1.0"/>
+</session>

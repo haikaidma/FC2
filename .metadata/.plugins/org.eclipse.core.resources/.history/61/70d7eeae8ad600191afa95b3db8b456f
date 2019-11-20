@@ -1,0 +1,42 @@
+package stack;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Exercise01 {
+	private int n;
+	
+	public void input() {
+		Scanner kb= new Scanner(System.in);
+		System.out.println("enter n:");
+		n=kb.nextInt();
+	}
+	public void toBinary(int k) {
+		Stack <Integer> s= new Stack<Integer>();
+		while(n>0)
+		{
+			int du = n%k;
+			s.push(du);
+			n=n/k;
+		}
+		while(s.empty()==false) {
+			if(s.peek()<10) {
+			System.out.print(s.pop()+" ");
+			}
+			else {
+				if(s.pop()==10)
+					System.out.println("A" + s.pop());
+				else 
+					if(s.pop()==11)
+						System.out.println("B"+s.pop());
+		}
+			}
+	}
+	public static void main(String[] args) {
+		Exercise01 h= new Exercise01();
+		h.input();
+		h.toBinary(16);
+
+	}
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;binarySeachTree.Node_Tree.java&apos; to &apos;Node.java&apos;&#x0D;&#x0A;- Original project: &apos;Tree&apos;&#x0D;&#x0A;- Original element: &apos;binarySeachTree.Node_Tree.java&apos;&#x0D;&#x0A;- Renamed element: &apos;binarySeachTree.Node.java&apos;" description="Rename compilation unit &apos;Node_Tree.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;binarySeachTree{Node_Tree.java" name="Node.java" references="false" stamp="1573003760843" version="1.0"/>
+</session>

@@ -1,0 +1,17 @@
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField; 
+public class Test {
+    
+    public static void main(String[] args) {    
+        // Creating instance of JFrame
+        JFrame frame = new JFrame("My First Swing Example");
+        // Setting the width and height of frame
+        frame.setSize(350, 200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    }
+

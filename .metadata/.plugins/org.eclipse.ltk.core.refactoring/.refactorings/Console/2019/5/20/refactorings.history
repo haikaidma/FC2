@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move package &apos;console&apos; to &apos;gui/src&apos;&#x0D;&#x0A;- Original project: &apos;Console&apos;&#x0D;&#x0A;- Destination element: &apos;gui/src&apos;&#x0D;&#x0A;- Original element: &apos;Console/src/console&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move package" destination="=gui/src" element1="/src&lt;console" flags="589830" fragments="1" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.movePackages" stamp="1558054649989" version="1.0"/>
+</session>

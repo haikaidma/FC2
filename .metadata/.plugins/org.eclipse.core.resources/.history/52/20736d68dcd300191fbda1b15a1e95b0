@@ -1,0 +1,91 @@
+package queue;
+
+public class MyQueueArray<E> {
+	private E[] a;
+	private int head;
+	private int tail;
+	private int size;
+	public MyQueueArray() {
+		a = (E[]) new Object[15];
+		head = 0;
+		tail = 0;
+		size = 0;
+			}
+	public MyQueueArray(int size) {
+		a = (E[]) new Object[size];
+		head = 0;
+		tail = 0;
+		size = 0;
+			}
+	public boolean add(E e) {
+		if (size >= a.length) {
+		System.out.println("Queue is full");
+					System.exit(0);	
+		}
+				a[tail++] = e;
+				tail = tail % a.length;
+				size++;
+				return true;
+			}
+	public boolean offer(E e) {
+		if (size >= a.length)
+			return false;
+			a[tail++] = e;
+			tail = tail % a.length;
+			size++;
+			return true;
+			}
+	public E remove() {
+			if (size <= 0) {
+				System.out.println("queue is empty");
+				System.exit(0);
+				}
+		E temp = a[head++];
+		head = head % a.length;
+		size--;
+		return temp;
+			}
+	public E poll() {
+		if (size <= 0)
+			return null;
+			E temp = a[head++];
+			head = head % a.length;
+			size--;
+			return temp;
+			}
+
+	public E element(){
+		if (size <= 0){
+		System.out.println("queue is empty");
+		System.exit(0);
+				}
+		return a[head];
+			}
+	public E peek() {
+		if (size <= 0)
+		return null;
+		return a[head];
+			}
+	public boolean isEmpty() {
+		return (size <= 0);
+			}
+	public boolean isFull() {
+		return (size >= a.length);
+			}
+	public String toString() {
+		String s=" ";
+		for(int i=head;i<=tail;i++) {
+			s=s+" "+a[i];
+		}
+		return s;
+	}
+	public static void main(String[] args) {
+		
+		MyQueueArray<Integer> h = new MyQueueArray<Integer>();
+		h.add(6);
+		h.add(8);
+		h.add(1);
+		System.out.println(h.toString());
+		   }
+	}
+

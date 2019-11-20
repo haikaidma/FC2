@@ -1,0 +1,82 @@
+package sort;
+import java.util.Scanner;
+
+public class Sort {
+	private int n;
+	private int []a=new int[100];
+public void input() 
+{
+	Scanner kb=new Scanner(System.in);
+	System.out.println("enter n: ");
+	n=(kb.nextInt());
+	System.out.println("nhap mang: ");
+	for(int i=0;i<n;i++) {
+		System.out.print("a["+(i+1)+"]:");
+		a[i]=kb.nextInt();
+	}
+}
+public void output()
+{
+	for(int i=0;i<n;i++)
+		System.out.print(a[i]+" ");
+}
+public void BubbleSort()
+{
+	for(int i=0;i<n-1;i++) {
+		for(int j=0;j<n-i-1;j++)
+			if(a[j]>a[j+1]) 
+			{
+				int tmp=a[j];
+				a[j]=a[j+1];
+				a[j+1]=tmp;
+			}
+//		System.out.println();
+//		output();
+	}
+	
+}
+public void SelectionSort()
+{
+	for(int i=0;i<n-1;i++)
+		{
+		int min=i;
+		for(int j=i+1;j<n;j++) 
+			if(a[j]<min)
+				min=a[j];
+		int tmp=a[min];
+		a[min]=a[i];
+		a[i]=tmp;
+		}
+}
+public void InsertionSort() {
+	for(int i=1;i<n;i++)
+	{
+		int t=a[i];
+		int j=i-1;
+		while(j>=0&&a[j]>t)
+		{
+			a[j+1]=a[j];
+			j--;
+		}
+		a[j+1]=t;
+		System.out.println();
+		output();
+	}
+}
+
+	public static void main(String[] args) {
+		Sort s= new  Sort();
+		s.input();
+		s.output();
+//		s.BubbleSort();
+//		System.out.println();
+//		s.output();
+//		s.SelectionSort();
+//		System.out.println();
+//		s.output();
+		s.InsertionSort();
+		System.out.println();
+		s.output();
+	}
+
+}

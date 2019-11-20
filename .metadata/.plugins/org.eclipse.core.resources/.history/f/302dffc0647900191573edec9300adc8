@@ -1,0 +1,52 @@
+package gui;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+
+public class GiaoDien3Nut extends JFrame implements ActionListener{
+	JButton btnQLTT,btnQLTV;
+	public GiaoDien3Nut() throws IOException
+	{
+		super("Giao Diện Chính Chính");
+		setLayout(null);
+		setSize(new Dimension(305,400));
+		super.setLocation(600,250);
+		super.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("c.jpg")))));
+		
+		JMenuBar mb = new JMenuBar();
+		
+		btnQLTT = new JButton("Quản Lý Tạm Trú");
+		btnQLTT.setBackground(Color.yellow);
+		btnQLTT.setBounds(new Rectangle(50,120,200,20));
+		btnQLTV = new JButton("Quản Lý Tạm Vắng");
+		btnQLTV.setBackground(Color.YELLOW);
+		btnQLTV.setBounds(new Rectangle(50,190,200,20));
+		add(btnQLTT);
+		add(btnQLTV);
+		btnQLTT.addActionListener(this);
+		btnQLTV.addActionListener(this);
+		
+		setResizable(false);
+		setVisible(true);
+	}
+	public static void main(String[] args) throws IOException {
+		GiaoDien3Nut huy = new GiaoDien3Nut();
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == btnQLTT)
+		{
+			QuanLyTamTru huy = new QuanLyTamTru();
+		}
+		if(e.getSource() == btnQLTV)
+		{
+			QuanLyTamVang huy = new QuanLyTamVang();
+		}
+			
+			
+	}
+}

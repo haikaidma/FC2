@@ -1,0 +1,53 @@
+package queue;
+import java.util.LinkedList;
+import java.util.Queue;
+public class RadixSort {
+
+		public  int getMax(int []list)
+		{
+			int max = list[0];
+			for(int i = 1 ; i < list.length ; i++)
+				if(list[i] > max)
+					max = list[i];
+			return max;
+		}
+		public  void countSort(int[] list,int x)
+		{
+			int[] kb = new int[list.length];
+			int size = 0;
+			for(int j = 0 ; j <=9 ; j++)
+			{
+				for(int i = 0 ; i < list.length ; i++)
+				{
+					if( ( ( list[i] / x ) % (10) ) == j )
+					{
+						kb[size] = list[i];
+						size++;
+					}
+				}
+					
+			}
+			System.arraycopy(kb, 0, list, 0,list.length);
+		}
+		public  void radixSort(int[] list)
+		{
+			int max = getMax(list);
+			
+			for(int x = 1 ; max / x > 0 ; x*=10)
+				countSort(list,x);
+		}
+		public  void print(int[] list)
+		{
+			for(int i = 0 ; i < list.length ; i++)
+				System.out.print(list[i]+" ");
+			System.out.println();
+		}
+		public static void main(String[] args) {
+			RadixSort h= new RadixSort();
+			int[] list = {6,49,45,833,556,48,997,465,236,4,56,19,13,77,34,32,95,664,55};
+			h.radixSort(list);
+			h.print(list);
+		}
+	}
+
+

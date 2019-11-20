@@ -1,0 +1,92 @@
+package array_of_integer;
+
+import java.util.Scanner;
+
+public class ArrayOfInteger {
+	private int n;
+	private int a[];
+	//constructor
+	public ArrayOfInteger() {
+		a=new int[10];
+		n=0;
+	}
+	public ArrayOfInteger(int capacity) {
+		a=new int[capacity];
+		n=0;
+	}
+	public void add(int element) {
+		if(n==a.length) {
+		int[]b=new int[a.length*2];
+		for(int i=0;i<n;i++) 
+			b[i]=a[i];
+		
+		a=b;
+		}
+	a[n]=element;
+	n++; 
+	
+	}
+	/*public void input() {
+		Scanner c=new Scanner(System.in);
+		System.out.println("nhap n:");
+		this.n=(c.nextInt());
+		for(int i=0;i<n;i++) {
+			System.out.println("element :");
+			a[i]=c.nextInt();
+		}
+	}*/
+	public void output() {
+		for(int i=0;i<n;i++)
+		{
+			System.out.println(a[i]+" ");
+			System.out.println();
+		}
+	}
+	public void Remove(int index) {
+		for(int i=index-1;i<n;i++){
+			a[i]=a[i+1];
+		}
+		n--;
+	}
+	public boolean contain (int element) {
+		for(int i =0;i<n;i++) 
+			if(a[i]==element)
+				return true;
+		return false ;
+	}
+	public void add2(int element,int index) {
+		if(index<0||index>n) {
+			System.out.println("out of index");
+		}
+		else 
+		{
+			if(n==a.length) {
+				int[]b=new int[a.length*2];
+				for(int i=0;i<n;i++) 
+					b[i]=a[i];
+				
+				a=b;
+				}
+		}
+		for(int i=n;i>index;i--) {
+			a[i]=a[i-1];
+			a[index]=element;
+		}
+		n++;
+	}
+	public static void main(String[] args) {
+		ArrayOfInteger k= new ArrayOfInteger();
+		k.add(3);
+		k.add(4);
+		k.add(8);
+		k.add(6);
+		k.output();
+		k.Remove(3);
+		k.output();
+		k.add2(3, 2);
+		k.output();
+		k.contain(6);
+		
+	}
+
+}

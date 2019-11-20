@@ -1,0 +1,31 @@
+package stack;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Exercise01 {
+	private int n;
+	public void input() {
+		Scanner kb= new Scanner(System.in);
+		System.out.println("enter n:");
+		n=kb.nextInt();
+	}
+	public void toBinary() {
+		Stack <Integer> s= new Stack<Integer>();
+		while(n>0)
+		{
+			int du = n%2;
+			s.push(du);
+			n=n/2;
+		}
+		while(s.empty()==false)
+			System.out.print(s.pop());
+	}
+	public static void main(String[] args) {
+		Exercise01 h= new Exercise01();
+		h.input();
+		h.toBinary();
+
+	}
+
+}
